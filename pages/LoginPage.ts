@@ -6,7 +6,6 @@ export class LoginPage extends BasePage {
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
   readonly loginError: Locator;
-  readonly title: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -15,8 +14,6 @@ export class LoginPage extends BasePage {
     this.passwordInput = page.getByPlaceholder("Password");
 
     this.loginButton = page.getByRole("button", { name: "Login" });
-
-    this.title = page.getByText("Products", { exact: true });
 
     this.loginError = page.getByRole("alert");
   }
