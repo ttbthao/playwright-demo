@@ -1,12 +1,12 @@
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class LoginPage extends BasePage {
-  readonly usernameInput;
-  readonly passwordInput;
-  readonly loginButton;
-  readonly loginError;
-  readonly title;
+  readonly usernameInput: Locator;
+  readonly passwordInput: Locator;
+  readonly loginButton: Locator;
+  readonly loginError: Locator;
+  readonly title: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -16,7 +16,7 @@ export class LoginPage extends BasePage {
 
     this.loginButton = page.getByRole("button", { name: "Login" });
 
-    this.title = page.getByText('Products', { exact: true });
+    this.title = page.getByText("Products", { exact: true });
 
     this.loginError = page.getByRole("alert");
   }

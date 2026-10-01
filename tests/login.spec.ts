@@ -17,5 +17,5 @@ test("login with invalid credentials", async ({ page }) => {
 
   await loginPage.login('invalid_user', 'invalid_pass');
 
-  await expect(loginPage.loginError).toBeVisible();
+  await expect(loginPage.loginError).toContainText('Epic sadface: Username and password do not match any user in this service');
 });
