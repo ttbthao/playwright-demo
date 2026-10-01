@@ -1,11 +1,11 @@
-import { defineConfig, devices } from '@playwright/test';
-import * as dotenv from 'dotenv';
+import { defineConfig, devices } from "@playwright/test";
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
 export default defineConfig({
-  testDir: './tests',
-  testMatch: '**/*.spec.ts',
+  testDir: "./tests",
+  testMatch: "**/*.spec.ts",
   timeout: 60 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -16,25 +16,20 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-reporter: [
-  ['list'],
-  ['html', { open: 'never' }]
-],
+  reporter: [["list"], ["html", { open: "never" }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
     baseURL: process.env.BASE_URL,
-    
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     // {
