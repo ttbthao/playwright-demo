@@ -17,3 +17,16 @@ test("Login API - valid credentials", async ({ apiRequest }) => {
   expect(body.data.accessToken).toBeTruthy();
   expect(body.data.refreshToken).toBeTruthy();
 });
+
+test("Login API - invalid credentials", async ({ apiRequest }) => {
+  const authApi = new AuthApi(apiRequest);
+
+  const response = await authApi.login("invalid_user", "invalid_user");
+
+  expect(response.status()).toBeGreaterThanOrEqual(400);
+
+  const body = await response.json();
+
+  expect(body.error.code).toBe("VALIDATION_ERROR");
+  expect(body.error.message).toBe("Invalid login payload.");
+});

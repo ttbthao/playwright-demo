@@ -7,7 +7,7 @@ export class UsersApi {
   ) {}
 
   async getUsers() {
-    return this.request.get("/v1/users", {
+    return this.request.get("v1/users", {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
       },

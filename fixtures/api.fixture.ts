@@ -28,8 +28,9 @@ export const test = base.extend<ApiFixtures>({
       process.env.API_PASSWORD!,
     );
 
-    const body = await response.json();
+    await expect(response).toBeOK();
 
+    const body = await response.json();
     const accessToken = body.data.accessToken;
 
     await use(accessToken);
