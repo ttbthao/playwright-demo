@@ -7,8 +7,6 @@ test("Get users API - authenticated", async ({ usersApi }) => {
 
   expect(response.status()).toBe(200);
 
-  await expect(response).toBeOK();
-
   const body = await response.json();
 
   expect(body.data).toEqual(expect.any(Array));
@@ -33,20 +31,15 @@ test("POST users - should create a new user", async ({ usersApi }) => {
 
   expect(response.status()).toBe(201);
 
-  await expect(response).toBeOK();
-
   const body = await response.json();
 
   expect(body.data).toBeDefined();
-  expect(body.data.email).toBe(userData.email);
-  expect(body.data.firstName).toBe(userData.firstName);
-  expect(body.data.lastName).toBe(userData.lastName);
-  expect(body.data.role).toBe(userData.role);
+  expect(body.data).toMatchObject(userData);
 });
 
 test("PUT users - should update a user", async ({ usersApi }) => {
   // I initially planned to create a new user and use its ID for the update request.
-  // However, this test API does not persist newly created users, 
+  // However, this test API does not persist newly created users,
   // so the created user cannot be found in the subsequent update request.
   // Therefore, we use an existing user ID (ID: 1) for the PUT request.
 
@@ -77,16 +70,12 @@ test("PUT users - should update a user", async ({ usersApi }) => {
   const updateResponse = await usersApi.updateUser(userId, updateUserData);
 
   expect(updateResponse.status()).toBe(200);
-  await expect(updateResponse).toBeOK();
 
   const updateBody = await updateResponse.json();
 
   expect(updateBody.data).toBeDefined();
   expect(updateBody.data.id).toBe(userId);
-  expect(updateBody.data.email).toBe(updateUserData.email);
-  expect(updateBody.data.firstName).toBe(updateUserData.firstName);
-  expect(updateBody.data.lastName).toBe(updateUserData.lastName);
-  expect(updateBody.data.role).toBe(updateUserData.role);
+  expect(updateBody.data).toMatchObject(updateUserData);
 });
 
 test("PATCH users - should partially update a user", async ({ usersApi }) => {
@@ -97,7 +86,6 @@ test("PATCH users - should partially update a user", async ({ usersApi }) => {
   const response = await usersApi.patchUser(userId, patchData);
 
   expect(response.status()).toBe(200);
-  await expect(response).toBeOK();
 
   const body = await response.json();
 
@@ -107,9 +95,9 @@ test("PATCH users - should partially update a user", async ({ usersApi }) => {
 });
 
 test("DELETE users - should delete a user", async ({ usersApi }) => {
-  // Ideally, I should create a user and use its ID for the delete request. 
-  // However, this test API does not persist newly created users, 
-  // so I cannot verify the user after deletion. 
+  // Ideally, I should create a user and use its ID for the delete request.
+  // However, this test API does not persist newly created users,
+  // so I cannot verify the user after deletion.
   // Therefore, I use a non-existing user ID to verify that the GET request returns 404.
 
   const ivalidUserId = 104;
