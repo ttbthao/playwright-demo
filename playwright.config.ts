@@ -6,7 +6,7 @@ dotenv.config();
 export default defineConfig({
   testDir: "./tests",
   testMatch: "**/*.spec.ts",
-  timeout: 60 * 1000,
+  timeout: 30 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -23,6 +23,7 @@ export default defineConfig({
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     baseURL: process.env.BASE_URL,
+    testIdAttribute: "data-test",
   },
 
   /* Configure projects for major browsers */
