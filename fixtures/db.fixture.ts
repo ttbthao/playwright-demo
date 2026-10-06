@@ -5,16 +5,28 @@ type DbFixturesUser = {
   db: {
     createUser: typeof createUser;
     findUserByEmail: typeof findUserByEmail;
-    deleteUserByEmail: typeof deleteUserByEmail;
   };
 };
 
 export const test = base.extend<DbFixturesUser>({
   db: async ({}, use) => {
+    const createdEmails: string[] = [];
+
     await use({
-      createUser,
+      createUser: async (userData) => {
+        const user = await createUser(userData);
+
+        createdEmails.push(user.email);
+
+        return user;
+      },
+
       findUserByEmail,
-      deleteUserByEmail,
     });
+
+    // Cleanup after the test, even if the test fails
+    for (const email of createdEmails) {
+      await deleteUserByEmail(email);
+    }
   },
 });
