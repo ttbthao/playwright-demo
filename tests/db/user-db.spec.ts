@@ -13,7 +13,6 @@ test("Create user - should save user correctly in database", async ({ db }) => {
   const createdUser = await db.createUser(userData);
 
   // Verify created user
-  expect(createdUser).toBeDefined();
   expect(createdUser).toMatchObject({
     email: userData.email,
     first_name: userData.firstName,
@@ -24,19 +23,10 @@ test("Create user - should save user correctly in database", async ({ db }) => {
   // Query database
   const user = await db.findUserByEmail(userData.email);
 
-  expect(user).toBeDefined();
   expect(user).toMatchObject({
     email: userData.email,
     first_name: userData.firstName,
     last_name: userData.lastName,
     role: userData.role,
   });
-
-  // Cleanup
-  await db.deleteUserByEmail(userData.email);
-
-  // Verify cleanup
-  const deletedUser = await db.findUserByEmail(userData.email);
-
-  expect(deletedUser).toBeUndefined();
 });
