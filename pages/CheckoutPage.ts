@@ -37,9 +37,7 @@ export class CheckoutPage extends BasePage {
     this.tax = page.getByTestId("tax-label");
     this.total = page.getByTestId("total-label");
 
-    this.successMessage = page.getByText(
-      "Thank you for your order!"
-    );
+    this.successMessage = page.getByText("Thank you for your order!");
   }
 
   async fillCustomerInformation(
@@ -62,23 +60,5 @@ export class CheckoutPage extends BasePage {
 
   item(productName: string): Locator {
     return this.page.getByText(productName, { exact: true });
-  }
-
-  async getSubtotal(): Promise<number> {
-    const text = await this.subtotal.textContent();
-
-    return Number(text?.replace("Item total: $", ""));
-  }
-
-  async getTax(): Promise<number> {
-    const text = await this.tax.textContent();
-
-    return Number(text?.replace("Tax: $", ""));
-  }
-
-  async getTotal(): Promise<number> {
-    const text = await this.total.textContent();
-
-    return Number(text?.replace("Total: $", ""));
   }
 }

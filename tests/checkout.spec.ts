@@ -46,11 +46,9 @@ test("checkout - should complete an order successfully", async ({ page }) => {
   await expect(checkoutPage.item("Sauce Labs Onesie")).toBeVisible();
 
   // Verify price calculation
-  const subtotal = await checkoutPage.getSubtotal();
-  const tax = await checkoutPage.getTax();
-  const total = await checkoutPage.getTotal();
-
-  expect(total).toBeCloseTo(subtotal + tax, 2);
+  await expect(checkoutPage.subtotal).toHaveText("Item total: $37.98"); // 29.99 + 7.99
+  await expect(checkoutPage.tax).toHaveText("Tax: $3.04"); // 8% tax
+  await expect(checkoutPage.total).toHaveText("Total: $41.02");
 
   // Finish order
   await checkoutPage.finish();
