@@ -38,6 +38,10 @@ jobs:
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
 
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          API_EMAIL: ${{ secrets.API_EMAIL }}
+          API_PASSWORD: ${{ secrets.API_PASSWORD }}
+
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
