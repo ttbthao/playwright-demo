@@ -1,6 +1,13 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 
+test.use({
+  storageState: {
+    cookies: [],
+    origins: [],
+  },
+});
+
 test("login with valid credentials", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
