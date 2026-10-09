@@ -20,7 +20,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
     screenshot: "only-on-failure",
     baseURL: process.env.BASE_URL,
     testIdAttribute: "data-test",
@@ -28,12 +28,16 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // Setup project for authentication
     {
       name: "setup",
       testMatch: /.*\.setup\.ts/,
     },
+
+    // UI tests
     {
-      name: "chromium",
+      name: "ui",
+      testDir: "./tests/ui",
       use: {
         ...devices["Desktop Chrome"],
         storageState: ".auth/user.json",
@@ -41,8 +45,21 @@ export default defineConfig({
       dependencies: ["setup"],
     },
 
+    // API tests
+    {
+      name: "api",
+      testDir: "./tests/api",
+    },
+
+    // DB tests
+    {
+      name: "db",
+      testDir: "./tests/db",
+    },
+
     // {
-    //   name: "firefox",
+    //   name: "ui-firefox",
+    //   testDir: "./tests/ui",
     //   use: {
     //     ...devices["Desktop Firefox"],
     //     storageState: ".auth/user.json",
@@ -51,7 +68,8 @@ export default defineConfig({
     // },
 
     // {
-    //   name: "webkit",
+    //   name: "ui-webkit",
+    //   testDir: "./tests/ui",
     //   use: {
     //     ...devices["Desktop Safari"],
     //     storageState: ".auth/user.json",

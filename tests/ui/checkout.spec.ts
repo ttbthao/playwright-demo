@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-import { InventoryPage } from "../pages/InventoryPage";
-import { CartPage } from "../pages/CartPage";
-import { CheckoutPage } from "../pages/CheckoutPage";
+import { InventoryPage } from "../../pages/InventoryPage";
+import { CartPage } from "../../pages/CartPage";
+import { CheckoutPage } from "../../pages/CheckoutPage";
 
 test("checkout - should complete an order successfully", async ({ page }) => {
   const inventoryPage = new InventoryPage(page);
