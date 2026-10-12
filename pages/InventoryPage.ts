@@ -16,12 +16,20 @@ export class InventoryPage extends BasePage {
     await this.goto("/inventory.html");
   }
 
-  async addProductToCart(productName: string) {
-    const product = this.page
+  productItem(productName: string): Locator {
+    return this.page
       .locator(".inventory_item")
       .filter({ hasText: productName });
+  }
 
+  async addProductToCart(productName: string) {
+    const product = this.productItem(productName);
     await product.getByRole("button", { name: "Add to cart" }).click();
+  }
+
+  async removeProductFromCart(productName: string) {
+    const product = this.productItem(productName);
+    await product.getByRole("button", { name: "Remove" }).click();
   }
 
   async openCart() {
